@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Arc Boost Rescue</title>
+<meta name="description" content="Save your Arc Boosts before Arc shuts down on December 22, 2026. Converts them for Stylus, Violentmonkey, Zen, Firefox, Chrome, Brave, Edge and Dia. Runs entirely in your browser.">
+<meta property="og:title" content="Arc Boost Rescue">
+<meta property="og:description" content="Arc says Boosts can't be exported. This saves them, for any browser, without uploading anything.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23ff5a36'/%3E%3Cpath d='M9 19c2.5-6 11.5-6 14 0' stroke='white' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main>
+  <header class="hero">
+    <p class="eyebrow">Arc stops working on <strong>December 22, 2026</strong></p>
+    <h1>Rescue your Arc Boosts</h1>
+    <p class="lede">Arc's help centre says Boosts <em>can't be exported</em> and won't move to Dia. They're still on your Mac, though. This page turns them into files that work in Zen, Firefox, Chrome, Brave, Edge, Dia and Safari.</p>
+    <ul class="trust">
+      <li>Runs entirely in your browser</li>
+      <li>Nothing is uploaded</li>
+      <li><a href="https://github.com/tadahk/potential-arc-boost-rescue" rel="noopener">Open source</a></li>
+    </ul>
+  </header>
+
+  <section class="card" aria-labelledby="s1">
+    <h2 id="s1"><span class="num">1</span> Find your Boosts folder</h2>
+    <p>Your Boosts live in this folder on your Mac:</p>
+    <div class="pathrow">
+      <code id="boost-path">~/Library/Application Support/Arc/boosts</code>
+      <button type="button" class="ghost" id="copy-path">Copy</button>
+    </div>
+    <p class="hint">It's a hidden folder. In the next step, when the folder picker opens, press <kbd>⌘</kbd> <kbd>⇧</kbd> <kbd>G</kbd>, paste the path, press Return, then click <strong>Upload</strong> (or <strong>Open</strong>). Despite the button's name, nothing leaves your computer.</p>
+    <details>
+      <summary>Prefer to do it by hand, or on Windows?</summary>
+      <p>In Finder, choose Go › Go to Folder, paste the path above, and drag the <code>boosts</code> folder onto the drop zone below. You can also open any single Boost in Arc's Boost editor, choose its settings icon, then <strong>Open in Finder</strong>.</p>
+      <p>On Windows, Boosts were only partly supported. If you had any, look for a <code>boosts</code> folder inside Arc's data folder under <code>%LOCALAPPDATA%\Packages</code> (a folder starting with <code>TheBrowserCompany.Arc</code>) and drop it below.</p>
+    </details>
+  </section>
+
+  <section class="card" aria-labelledby="s2">
+    <h2 id="s2"><span class="num">2</span> Choose the folder</h2>
+    <label class="drop" id="drop">
+      <input type="file" id="picker" webkitdirectory directory multiple>
+      <span class="drop-main">Choose your <code>boosts</code> folder</span>
+      <span class="drop-sub">or drag it here</span>
+    </label>
+    <p class="status" id="status" role="status" aria-live="polite"></p>
+  </section>
+
+  <section class="card hidden" id="results" aria-labelledby="s3">
+    <h2 id="s3"><span class="num">3</span> Download your rescued Boosts</h2>
+    <p id="summary"></p>
+    <div class="actions">
+      <button type="button" id="dl-zip" class="primary">Download everything (.zip)</button>
+      <button type="button" id="dl-stylus" class="ghost">Stylus file only</button>
+    </div>
+    <ul class="boosts" id="boost-list"></ul>
+  </section>
+
+  <section class="card" aria-labelledby="s4">
+    <h2 id="s4"><span class="num">4</span> Install them in your new browser</h2>
+    <p>Unzip the download, then pick one route. The zip also has a README with these steps.</p>
+    <div class="routes">
+      <article>
+        <h3>Any browser <span class="tag">easiest</span></h3>
+        <p>Zen, Firefox, Chrome, Brave, Edge, Dia, Safari</p>
+        <ol>
+          <li>Install <a href="https://violentmonkey.github.io/" rel="noopener">Violentmonkey</a> or Tampermonkey (on Safari, the free <a href="https://github.com/quoid/userscripts" rel="noopener">Userscripts</a> app).</li>
+          <li>Drag each file from the <code>userscripts</code> folder into a browser tab and click Install.</li>
+        </ol>
+      </article>
+      <article>
+        <h3>Restyling Boosts</h3>
+        <p>For Boosts that only change how sites look</p>
+        <ol>
+          <li>Install <a href="https://add0n.com/stylus.html" rel="noopener">Stylus</a>.</li>
+          <li>Open Stylus › Manage › Import and choose <code>stylus-import.json</code>.</li>
+        </ol>
+      </article>
+      <article>
+        <h3>Chrome-based browsers</h3>
+        <p>Chrome, Brave, Edge, Dia, Vivaldi: all Boosts in one extension</p>
+        <ol>
+          <li>Open <code>chrome://extensions</code> and switch on Developer mode.</li>
+          <li>Click Load unpacked and choose the <code>chromium-extension</code> folder. Keep that folder somewhere permanent.</li>
+        </ol>
+      </article>
+    </div>
+  </section>
+
+  <section class="faq" aria-labelledby="faq">
+    <h2 id="faq">Questions</h2>
+    <details>
+      <summary>Is this safe?</summary>
+      <p>The page has no server side and is locked so it cannot connect to the internet at all: everything happens in your browser tab. The code is short and <a href="https://github.com/tadahk/potential-arc-boost-rescue" rel="noopener">public on GitHub</a>. Only install Boosts you made or trust, since scripts run on the sites they target.</p>
+    </details>
+    <details>
+      <summary>Does it work after December 22?</summary>
+      <p>Probably, since the files stay on your Mac until you delete Arc's data. But Arc may clean up when it's removed or updated, so rescue them now.</p>
+    </details>
+    <details>
+      <summary>What doesn't come across?</summary>
+      <p>Each Boost's CSS and JavaScript, its sites and whether it was on all come across. Rare extras (a pop-up window or background script inside a Boost) can't be converted, but they're kept in the <code>original-backup</code> folder and listed in the README. Boosts made for Arc's own pages won't apply elsewhere.</p>
+    </details>
+    <details>
+      <summary>What about Zen's own Boosts?</summary>
+      <p>Zen has its own Boosts feature. Until it can import files, the Violentmonkey and Stylus routes work in Zen today, or you can paste a Boost's CSS from the backup folder into a new Zen Boost.</p>
+    </details>
+    <details>
+      <summary>Something didn't convert properly</summary>
+      <p>Please <a href="https://github.com/tadahk/potential-arc-boost-rescue/issues" rel="noopener">open an issue</a>. If you can, attach the Boost's folder from <code>original-backup</code> (check it has nothing private in it first).</p>
+    </details>
+  </section>
+
+  <footer>
+    <p id="tip" class="hidden"></p>
+    <p>Free and open source. Not affiliated with The Browser Company.</p>
+  </footer>
+</main>
+<script src="converter.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
