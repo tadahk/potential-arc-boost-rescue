@@ -61,3 +61,5 @@ button:disabled { opacity: 0.4; cursor: not-allowed; }
 .foot { margin-top: 48px; }
 .hidden { display: none !important; }
 .sub { padding-left: 18px; margin: 0 0 8px; }
+details summary { cursor: pointer; }
+details .sub { margin-top: 6px; }

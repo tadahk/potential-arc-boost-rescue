@@ -34,17 +34,26 @@
 
     <li id="results" class="hidden">
       <p id="summary"></p>
-      <p><button type="button" id="dl-zip" class="primary">download zip</button> <button type="button" id="dl-stylus">just the stylus file</button></p>
+      <p><button type="button" id="dl-zip" class="primary">download zip</button></p>
       <ul class="boosts" id="boost-list"></ul>
     </li>
 
     <li>
-      <p>unzip it and use whichever:</p>
-      <ul class="small">
-        <li><b>any browser:</b> install <a href="https://violentmonkey.github.io/" rel="noopener">violentmonkey</a>, drag the files from <code>userscripts/</code> in</li>
-        <li><b>just css:</b> <a href="https://add0n.com/stylus.html" rel="noopener">stylus</a> › manage › import › <code>stylus-import.json</code></li>
-        <li><b>chrome/brave/edge/dia:</b> <code>chrome://extensions</code> › developer mode › load unpacked › <code>chromium-extension/</code></li>
+      <p>put them in your new browser (don't unzip anything):</p>
+      <ul class="small sub">
+        <li>install violentmonkey: <a href="https://chromewebstore.google.com/detail/violentmonkey/jinjaccalgkegednnccohejagnlnfdag" rel="noopener">chrome / brave / edge / dia</a> or <a href="https://addons.mozilla.org/firefox/addon/violentmonkey/" rel="noopener">firefox / zen</a></li>
+        <li>click the violentmonkey icon (it might be inside the puzzle-piece menu) › <b>open dashboard</b></li>
+        <li><b>settings</b> on the left › <b>import from zip</b> › pick the zip you just downloaded</li>
+        <li>done. your boosts work on their sites again.</li>
       </ul>
+      <details class="small">
+        <summary>other ways</summary>
+        <ul class="sub">
+          <li><b>stylus</b> (css only): unzip, then stylus › manage › import › <code>stylus-import.json</code> <button type="button" id="dl-stylus">or grab just that file</button></li>
+          <li><b>no add-on, chrome-type browsers:</b> unzip, <code>chrome://extensions</code> › developer mode on › load unpacked › <code>chromium-extension</code> folder</li>
+          <li><b>safari:</b> unzip, install the free <a href="https://github.com/quoid/userscripts" rel="noopener">userscripts</a> app, add the files from <code>userscripts</code></li>
+        </ul>
+      </details>
     </li>
   </ol>
 
