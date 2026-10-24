@@ -120,7 +120,7 @@
 
   function sitesLabel(matches) {
     const a = appliesTo(matches);
-    if (!a.domains && !a.regexps) return matches.length ? 'All sites' : 'Unknown site';
+    if (!a.domains && !a.regexps) return matches.length ? 'all sites' : 'unknown site';
     return [].concat(a.domains || [], (a.regexps || []).map(() => 'specific pages')).filter(
       (v, i, arr) => arr.indexOf(v) === i).join(', ');
   }
@@ -335,43 +335,25 @@
 
   function toReadme(boosts, counts) {
     const lines = [
-      'ARC BOOST RESCUE',
-      '================',
+      'arc boost rescue',
       '',
-      'Created ' + new Date().toISOString().slice(0, 10) + ' from ' + boosts.length + ' Arc Boost' + (boosts.length === 1 ? '' : 's') + '.',
-      'Nothing was uploaded: this file was made in your own browser.',
+      boosts.length + ' boost' + (boosts.length === 1 ? '' : 's') + ', ' + new Date().toISOString().slice(0, 10) + '.',
       '',
-      'WHAT IS IN THIS FOLDER',
+      "what's in here:",
+      '  userscripts/          ' + counts.userscripts + ' file(s). install violentmonkey, drag them in. works in any browser.',
+      '  stylus-import.json    ' + counts.stylus + ' style(s). stylus > manage > import.',
+      '  chromium-extension/   ' + counts.extension + ' boost(s). chrome://extensions > developer mode > load unpacked.',
+      '                        keep the folder somewhere permanent.',
+      '  original-backup/      your original boost folders, untouched.',
       '',
-      '  stylus-import.json     ' + counts.stylus + ' style(s). For the Stylus extension (any browser).',
-      '  userscripts/           ' + counts.userscripts + ' script(s). For Violentmonkey or Tampermonkey (any browser).',
-      '  chromium-extension/    ' + counts.extension + ' Boost(s) in one extension. For Chrome, Brave, Edge, Dia, Vivaldi.',
-      '  original-backup/       Your untouched Boost folders. Keep this.',
-      '',
-      'PICK ONE ROUTE',
-      '',
-      '  Easiest on any browser (Zen, Firefox, Chrome, Brave, Edge, Safari with an add-on):',
-      '    1. Install Violentmonkey (or Tampermonkey).',
-      '    2. Open each file in userscripts/ by dragging it into the browser, then click Install.',
-      '',
-      '  Only restyling (CSS) Boosts, with an easy editor:',
-      '    1. Install Stylus.',
-      '    2. Stylus > Manage > Import, then choose stylus-import.json.',
-      '',
-      '  Chrome, Brave, Edge, Dia or Vivaldi, everything in one place:',
-      '    1. Go to chrome://extensions (or brave://, edge://) and switch on Developer mode.',
-      '    2. Click "Load unpacked" and choose the chromium-extension folder.',
-      '    3. Keep that folder somewhere permanent; the browser reads it from there.',
-      '',
-      'YOUR BOOSTS',
-      ''
+      'your boosts:'
     ];
     for (const b of boosts) {
-      const parts = [b.css ? 'CSS' : null, b.js ? 'script' : null].filter(Boolean).join(' + ') || 'nothing to convert';
-      lines.push('  - ' + b.name + '  [' + sitesLabel(b.matches) + ']  ' + parts + (b.enabled ? '' : '  (was switched off)'));
-      for (const w of b.warnings) lines.push('      ! ' + w);
+      const parts = [sitesLabel(b.matches), b.css ? 'css' : null, b.js ? 'js' : null, b.enabled ? null : 'was off'].filter(Boolean).join(', ');
+      lines.push('  - ' + b.name + ' (' + parts + ')');
+      for (const w of b.warnings) lines.push('      note: ' + w.charAt(0).toLowerCase() + w.slice(1));
     }
-    lines.push('', 'Arc Boost Rescue is free and open source and is not affiliated with The Browser Company.', NAMESPACE, '');
+    lines.push('', 'not affiliated with arc. ' + NAMESPACE, '');
     return lines.join('\n');
   }
 

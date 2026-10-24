@@ -16,8 +16,8 @@
     const a = document.createElement('a');
     a.href = TIP_URL;
     a.rel = 'noopener';
-    a.textContent = 'Did this save your Boosts? Buy me a coffee';
-    tip.appendChild(a);
+    a.textContent = 'tip jar';
+    tip.append(' · ', a);
     tip.classList.remove('hidden');
   }
 
@@ -25,8 +25,8 @@
     const text = $('boost-path').textContent;
     try {
       await navigator.clipboard.writeText(text);
-      $('copy-path').textContent = 'Copied';
-      setTimeout(() => { $('copy-path').textContent = 'Copy'; }, 1500);
+      $('copy-path').textContent = 'copied';
+      setTimeout(() => { $('copy-path').textContent = 'copy'; }, 1500);
     } catch (e) {
       const r = document.createRange();
       r.selectNodeContents($('boost-path'));
@@ -74,60 +74,48 @@
 
   async function handle(fileObjects) {
     try {
-      setStatus('Reading your Boosts…');
+      setStatus('reading…');
       const files = await readFileList(fileObjects);
       result = BoostRescue.convert(files);
       if (!result.boosts.length) {
         $('results').classList.add('hidden');
-        setStatus('No Boosts found in that folder. Make sure you chose the "boosts" folder itself (the path in step 1).', 'warn');
+        setStatus('no boosts in there. pick the boosts folder itself.', 'warn');
         return;
       }
-      setStatus('Found ' + result.boosts.length + ' Boost' + (result.boosts.length === 1 ? '' : 's') + '. Nothing was uploaded.', 'ok');
+      setStatus('found ' + result.boosts.length + ' boost' + (result.boosts.length === 1 ? '' : 's') + '.', 'ok');
       render();
     } catch (e) {
       console.error(e);
-      setStatus('Something went wrong reading those files: ' + e.message, 'warn');
+      setStatus('that broke: ' + e.message, 'warn');
     }
   }
 
   function render() {
-    const { boosts, counts } = result;
-    const withWarnings = boosts.filter(b => b.warnings.length).length;
-    $('summary').textContent = counts.userscripts + ' ready to install' +
-      (withWarnings ? ', ' + withWarnings + ' with a note to check (shown below)' : '') + '.';
+    const { boosts } = result;
+    const notes = boosts.filter(b => b.warnings.length).length;
+    $('summary').textContent = 'ok, got them' + (notes ? ' (' + notes + ' with a note)' : '') + ':';
     const list = $('boost-list');
     list.textContent = '';
     for (const b of boosts) {
       const li = document.createElement('li');
-      const top = document.createElement('div');
-      top.className = 'b-top';
-      const name = document.createElement('strong');
-      name.textContent = b.name;
-      const site = document.createElement('span');
-      site.className = 'site';
-      site.textContent = BoostRescue.sitesLabel(b.matches);
-      top.append(name, site);
-      const tags = document.createElement('div');
-      tags.className = 'tags';
-      for (const [on, label] of [[b.css, 'CSS'], [b.js, 'Script'], [!b.enabled, 'Was off in Arc']]) {
-        if (!on) continue;
-        const t = document.createElement('span');
-        t.className = 'tag';
-        t.textContent = label;
-        tags.appendChild(t);
-      }
-      li.append(top, tags);
+      const name = document.createElement('span');
+      name.textContent = b.name + ' ';
+      const meta = document.createElement('span');
+      meta.className = 'site';
+      const bits = [BoostRescue.sitesLabel(b.matches), b.css ? 'css' : '', b.js ? 'js' : '', b.enabled ? '' : 'was off']
+        .filter(Boolean).join(' · ');
+      meta.textContent = '— ' + bits;
+      li.append(name, meta);
       for (const w of b.warnings) {
         const p = document.createElement('p');
         p.className = 'note';
-        p.textContent = w;
+        p.textContent = '↳ ' + w.charAt(0).toLowerCase() + w.slice(1);
         li.appendChild(p);
       }
       list.appendChild(li);
     }
-    $('dl-stylus').disabled = !counts.stylus;
+    $('dl-stylus').disabled = !result.counts.stylus;
     $('results').classList.remove('hidden');
-    $('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   function download(bytes, name, type) {
