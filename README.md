@@ -1,4 +1,4 @@
-# arc boost rescue
+# arc boost rescue (thanks claude)
 
 arc shuts down dec 22 and says boosts can't be exported. they're just files on your mac (`~/Library/Application Support/Arc/boosts`), so this grabs them and turns them into:
 
