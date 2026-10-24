@@ -17,13 +17,18 @@
 
   <ol class="steps">
     <li>
-      <p>pick your boosts folder. it's hidden, so when the picker opens hit <kbd>⌘⇧G</kbd> and paste:</p>
-      <p class="pathrow"><code id="boost-path">~/Library/Application Support/Arc/boosts</code> <button type="button" id="copy-path">copy</button></p>
+      <p>grab your boosts folder. it's hidden by default, so:</p>
+      <ul class="small sub">
+        <li>copy this: <code id="boost-path">~/Library/Application Support/Arc/boosts</code> <button type="button" id="copy-path">copy</button></li>
+        <li>click the box below. a window pops up.</li>
+        <li>press <b>command + shift + G</b> together. a little "go to folder" bar appears.</li>
+        <li>paste, hit return, then click <b>upload</b> (it doesn't upload anything, chrome just calls it that).</li>
+      </ul>
       <label class="drop" id="drop">
         <input type="file" id="picker" webkitdirectory directory multiple>
-        <span>choose folder (or drag it here)</span>
+        <span>choose folder</span>
       </label>
-      <p class="small">chrome will say "upload". it doesn't, nothing leaves your computer.</p>
+      <p class="small">or: in finder, top menu <b>go › go to folder…</b>, paste, then drag the <code>boosts</code> folder onto the box.</p>
       <p class="status" id="status" role="status" aria-live="polite"></p>
     </li>
 

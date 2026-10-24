@@ -60,3 +60,4 @@ button:disabled { opacity: 0.4; cursor: not-allowed; }
 .note { margin: 2px 0 0; }
 .foot { margin-top: 48px; }
 .hidden { display: none !important; }
+.sub { padding-left: 18px; margin: 0 0 8px; }
